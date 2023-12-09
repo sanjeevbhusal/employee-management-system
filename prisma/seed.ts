@@ -11,6 +11,24 @@ function generateRandomImageUrl() {
 
 // define the seed function
 async function seed() {
+  const departmentsData = [
+    { name: "Human Resources" },
+    { name: "Finance" },
+    { name: "Marketing" },
+    { name: "IT" },
+    { name: "Customer Support" },
+  ];
+
+  await prisma.department.createMany({
+    data: departmentsData,
+  });
+
+  const departments = await prisma.department.findMany();
+
+  function getDepartment() {
+    return faker.helpers.arrayElement(departments);
+  }
+
   const usersData = [
     {
       name: "John Doe",
@@ -20,6 +38,7 @@ async function seed() {
       address: "123 Main St, City",
       dob: new Date("1990-01-15"),
       gender: Gender.male,
+      departmentId: getDepartment().id,
     },
     {
       name: "Jane Smith",
@@ -29,6 +48,7 @@ async function seed() {
       address: "456 Oak St, Town",
       dob: new Date("1985-05-20"),
       gender: Gender.female,
+      departmentId: getDepartment().id,
     },
     {
       name: "Bob Johnson",
@@ -38,6 +58,7 @@ async function seed() {
       address: "789 Pine St, Village",
       dob: new Date("1982-08-10"),
       gender: Gender.male,
+      departmentId: getDepartment().id,
     },
     {
       name: "Alice Williams",
@@ -47,6 +68,7 @@ async function seed() {
       address: "101 Cedar St, Hamlet",
       dob: new Date("1993-03-25"),
       gender: Gender.female,
+      departmentId: getDepartment().id,
     },
     {
       name: "Charlie Brown",
@@ -56,6 +78,7 @@ async function seed() {
       address: "234 Birch St, County",
       dob: new Date("1988-11-12"),
       gender: Gender.male,
+      departmentId: getDepartment().id,
     },
     {
       name: "Eva Davis",
@@ -65,6 +88,7 @@ async function seed() {
       address: "567 Pine St, Village",
       dob: new Date("1995-09-18"),
       gender: Gender.female,
+      departmentId: getDepartment().id,
     },
     {
       name: "Frank Miller",
@@ -74,6 +98,7 @@ async function seed() {
       address: "876 Oak St, Town",
       dob: new Date("1980-07-02"),
       gender: Gender.male,
+      departmentId: getDepartment().id,
     },
     {
       name: "Grace Taylor",
@@ -83,6 +108,7 @@ async function seed() {
       address: "345 Main St, City",
       dob: new Date("1998-04-30"),
       gender: Gender.female,
+      departmentId: getDepartment().id,
     },
     {
       name: "Harry Wilson",
@@ -92,6 +118,7 @@ async function seed() {
       address: "654 Elm St, Town",
       dob: new Date("1983-12-08"),
       gender: Gender.male,
+      departmentId: getDepartment().id,
     },
     {
       name: "Ivy Robinson",
@@ -101,6 +128,7 @@ async function seed() {
       address: "987 Cedar St, Hamlet",
       dob: new Date("1991-06-14"),
       gender: Gender.female,
+      departmentId: getDepartment().id,
     },
   ];
 

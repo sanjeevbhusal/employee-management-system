@@ -10,14 +10,18 @@ function SearchBar() {
   const router = useRouter();
 
   const onChange = useDebouncedCallback((text: string) => {
-    const params = new URLSearchParams();
-    params.set("query", text);
+    const params = new URLSearchParams(searchParams);
+    if (text) {
+      params.set("query", text);
+    } else {
+      params.delete("query");
+    }
     router.push(`${pathname}?${params.toString()}`);
   }, 500);
 
   return (
     <Input
-      placeholder="Search Employees by Name..."
+      placeholder="Search Employees by Name"
       className="ml-auto w-96"
       onChange={(e) => onChange(e.target.value)}
       defaultValue={searchParams.get("query") || ""}
