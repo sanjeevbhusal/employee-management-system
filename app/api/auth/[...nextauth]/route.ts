@@ -19,7 +19,7 @@ export const authOptions: AuthOptions = {
       if (user) {
         token.id = user.id;
       }
-      console.log({ token, user });
+
       return token;
     },
     session({ session, token }) {
