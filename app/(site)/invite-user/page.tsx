@@ -62,7 +62,7 @@ export default function InviteUser() {
             <h1 className="pt-4 text-base font-semibold leading-7 text-gray-900">
               Invite a user to the organization
             </h1>
-            <p className="mt-1 text-sm leading-6 text-gray-600">
+            <p className="mt-2 text-sm leading-6 text-gray-600">
               The user will receive a email with a link. Upon clicking the link,
               the user will be redirected to fill a form. Upon completion of the
               form,the account will be successfully created and the user can log
