@@ -16,7 +16,7 @@ export default async function Home({ searchParams: { query } }: HomeProps) {
       <div>
         <SearchBar />
       </div>
-      <div className="mt-12 flex gap-4">
+      <div className="mt-12 flex flex-wrap gap-4">
         {users.map((user) => (
           <UserCard key={user.id} user={user} />
         ))}

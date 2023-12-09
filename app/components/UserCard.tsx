@@ -9,7 +9,7 @@ interface UserCardProps {
 
 function UserCard({ user }: UserCardProps) {
   return (
-    <div className="basis-[350px]">
+    <div className="grow basis-[350px]">
       <Link href={`/users/${user.id}`}>
         <Card className="bg-slate-50">
           <CardHeader>
