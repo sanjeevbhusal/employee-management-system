@@ -7,34 +7,33 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/app/components/ui/select";
-import { Department } from "@prisma/client";
+import { Department, Role } from "@prisma/client";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-interface DepartmentFilterProps {
-  departments: Department[];
+interface RoleFilterProps {
+  roles: Role[];
 }
 
-function DepartmentFilter({ departments }: DepartmentFilterProps) {
-  console.log(departments);
+function RoleFilter({ roles }: RoleFilterProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
 
-  function setDepartment(id: string) {
+  function setRole(role: string) {
     const params = new URLSearchParams(searchParams);
-    params.set("department", id);
+    params.set("role", role);
     router.push(`${pathname}?${params.toString()}`);
   }
 
   return (
-    <Select onValueChange={setDepartment}>
+    <Select onValueChange={setRole}>
       <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder="Department" />
+        <SelectValue placeholder="Role" />
       </SelectTrigger>
       <SelectContent>
-        {departments.map((department) => (
-          <SelectItem key={department.id} value={department.id.toString()}>
-            {department.name}
+        {roles.map((role) => (
+          <SelectItem key={role.id} value={role.name}>
+            {role.name}
           </SelectItem>
         ))}
       </SelectContent>
@@ -42,4 +41,4 @@ function DepartmentFilter({ departments }: DepartmentFilterProps) {
   );
 }
 
-export { DepartmentFilter };
+export { RoleFilter };

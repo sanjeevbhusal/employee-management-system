@@ -25,8 +25,31 @@ async function seed() {
 
   const departments = await prisma.department.findMany();
 
+  const rolesData = [
+    { name: "Manager" },
+    { name: "Software Enginner" },
+    { name: "Customer Service Representative" },
+    { name: "Marketing Intern" },
+    { name: "Marketing Manager" },
+    { name: "Accountant" },
+    { name: "Finance Officer" },
+    { name: "HR Officer" },
+    { name: "IT Operations Manager" },
+    // Add more roles as needed
+  ];
+
+  await prisma.role.createMany({
+    data: rolesData,
+  });
+
+  const roles = await prisma.role.findMany();
+
   function getDepartment() {
     return faker.helpers.arrayElement(departments);
+  }
+
+  function getRoles() {
+    return faker.helpers.arrayElement(roles);
   }
 
   const usersData = [
@@ -39,6 +62,7 @@ async function seed() {
       dob: new Date("1990-01-15"),
       gender: Gender.male,
       departmentId: getDepartment().id,
+      roleId: getRoles().id,
     },
     {
       name: "Jane Smith",
@@ -49,6 +73,7 @@ async function seed() {
       dob: new Date("1985-05-20"),
       gender: Gender.female,
       departmentId: getDepartment().id,
+      roleId: getRoles().id,
     },
     {
       name: "Bob Johnson",
@@ -59,6 +84,7 @@ async function seed() {
       dob: new Date("1982-08-10"),
       gender: Gender.male,
       departmentId: getDepartment().id,
+      roleId: getRoles().id,
     },
     {
       name: "Alice Williams",
@@ -69,6 +95,7 @@ async function seed() {
       dob: new Date("1993-03-25"),
       gender: Gender.female,
       departmentId: getDepartment().id,
+      roleId: getRoles().id,
     },
     {
       name: "Charlie Brown",
@@ -79,6 +106,7 @@ async function seed() {
       dob: new Date("1988-11-12"),
       gender: Gender.male,
       departmentId: getDepartment().id,
+      roleId: getRoles().id,
     },
     {
       name: "Eva Davis",
@@ -89,6 +117,7 @@ async function seed() {
       dob: new Date("1995-09-18"),
       gender: Gender.female,
       departmentId: getDepartment().id,
+      roleId: getRoles().id,
     },
     {
       name: "Frank Miller",
@@ -99,6 +128,7 @@ async function seed() {
       dob: new Date("1980-07-02"),
       gender: Gender.male,
       departmentId: getDepartment().id,
+      roleId: getRoles().id,
     },
     {
       name: "Grace Taylor",
@@ -109,6 +139,7 @@ async function seed() {
       dob: new Date("1998-04-30"),
       gender: Gender.female,
       departmentId: getDepartment().id,
+      roleId: getRoles().id,
     },
     {
       name: "Harry Wilson",
@@ -119,6 +150,7 @@ async function seed() {
       dob: new Date("1983-12-08"),
       gender: Gender.male,
       departmentId: getDepartment().id,
+      roleId: getRoles().id,
     },
     {
       name: "Ivy Robinson",
@@ -129,6 +161,7 @@ async function seed() {
       dob: new Date("1991-06-14"),
       gender: Gender.female,
       departmentId: getDepartment().id,
+      roleId: getRoles().id,
     },
   ];
 

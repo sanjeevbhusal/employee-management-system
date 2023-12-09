@@ -3,6 +3,8 @@ import { prisma } from "../lib/db";
 async function getUsers(
   query: string | undefined,
   departmentId: number | undefined,
+  gender: string | undefined,
+  role: string | undefined,
 ) {
   const filter: Record<any, any> = {};
 
@@ -16,6 +18,18 @@ async function getUsers(
   if (departmentId) {
     filter["departmentId"] = departmentId;
   }
+
+  if (gender) {
+    filter["gender"] = gender;
+  }
+
+  if (role) {
+    filter["role"] = {
+      name: role,
+    };
+  }
+
+  console.log(filter);
 
   return await prisma.user.findMany({
     where: filter,

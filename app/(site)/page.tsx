@@ -1,6 +1,9 @@
 import { getDepartments } from "../actions/getDepartments";
+import { getRoles } from "../actions/getRoles";
 import { getUsers } from "../actions/getUsers";
 import { DepartmentFilter } from "../components/DepartmentFilter";
+import { GenderFilter } from "../components/GenderFilter";
+import { RoleFilter } from "../components/RoleFitler";
 import { SearchBar } from "../components/SearchBar";
 import { Tag } from "../components/Tag";
 import { UserCard } from "../components/UserCard";
@@ -10,24 +13,33 @@ interface HomeProps {
   searchParams: {
     query: string | undefined;
     department: string | undefined;
+    gender: string | undefined;
+    role: string | undefined;
   };
 }
 
 export default async function Home({
-  searchParams: { query, department },
+  searchParams: { query, department, gender, role },
 }: HomeProps) {
   const users = await getUsers(
     query,
     department ? parseInt(department) : undefined,
+    gender,
+    role,
   );
   const departments = await getDepartments();
+  const roles = await getRoles();
 
   return (
     <div className="px-4 py-4 lg:px-20">
       <div>
         <SearchBar />
       </div>
-      <DepartmentFilter departments={departments} />
+      <div className="flex gap-4">
+        <DepartmentFilter departments={departments} />
+        <RoleFilter roles={roles} />
+        <GenderFilter />
+      </div>
 
       <div className="mt-4 flex gap-4">
         {query && <Tag type="query" name={query} />}
@@ -40,6 +52,8 @@ export default async function Home({
             }
           />
         )}
+        {gender && <Tag type="gender" name={gender} />}
+        {role && <Tag type="role" name={role} />}
       </div>
 
       <div className="mt-12 flex flex-wrap gap-4">
