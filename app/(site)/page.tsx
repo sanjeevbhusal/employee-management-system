@@ -3,6 +3,7 @@ import { getRoles } from "../actions/getRoles";
 import { getUsers } from "../actions/getUsers";
 import { DepartmentFilter } from "../components/DepartmentFilter";
 import { GenderFilter } from "../components/GenderFilter";
+import { Pagination } from "../components/Pagination";
 import { RoleFilter } from "../components/RoleFitler";
 import { SearchBar } from "../components/SearchBar";
 import { Tag } from "../components/Tag";
@@ -15,17 +16,19 @@ interface HomeProps {
     department: string | undefined;
     gender: string | undefined;
     role: string | undefined;
+    page: string | undefined;
   };
 }
 
 export default async function Home({
-  searchParams: { query, department, gender, role },
+  searchParams: { query, department, gender, role, page },
 }: HomeProps) {
-  const users = await getUsers(
+  const { totalMatches, users } = await getUsers(
     query,
     department ? parseInt(department) : undefined,
     gender,
     role,
+    page ? parseInt(page) : 1,
   );
   const departments = await getDepartments();
   const roles = await getRoles();
@@ -41,6 +44,7 @@ export default async function Home({
         <GenderFilter />
       </div>
 
+      <Pagination totalUsers={totalMatches} />
       <div className="mt-4 flex gap-4">
         {query && <Tag type="query" name={query} />}
         {department && (

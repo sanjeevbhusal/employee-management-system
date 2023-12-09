@@ -5,6 +5,7 @@ async function getUsers(
   departmentId: number | undefined,
   gender: string | undefined,
   role: string | undefined,
+  page: number,
 ) {
   const filter: Record<any, any> = {};
 
@@ -29,11 +30,20 @@ async function getUsers(
     };
   }
 
-  console.log(filter);
-
-  return await prisma.user.findMany({
+  const totalMatches = await prisma.user.count({
     where: filter,
   });
+
+  const users = await prisma.user.findMany({
+    where: filter,
+    take: 10,
+    skip: 10 * (page - 1),
+  });
+
+  return {
+    totalMatches,
+    users,
+  };
 }
 
 export { getUsers };
