@@ -42,19 +42,33 @@ model Account {
 }
 
 model User {
-  id            String      @id @default(cuid())
+  id            String       @id @default(cuid())
   name          String?
-  email         String?     @unique
+  about         String?
+  email         String?      @unique
+  country       String?
+  streetAddress String?
+  city          String?
+  state         String?
   emailVerified DateTime?
   image         String?
   address       String?
   dob           DateTime?
   gender        Gender?
   departmentId  Int?
-  department    Department? @relation(fields: [departmentId], references: [id])
+  department    Department?  @relation(fields: [departmentId], references: [id])
   roleId        Int?
-  role          Role?       @relation(fields: [roleId], references: [id])
+  role          Role?        @relation(fields: [roleId], references: [id])
   accounts      Account[]
+  Invitation    Invitation[]
+}
+
+model Invitation {
+  id              String @id @default(cuid())
+  email           String
+  role            String
+  invitedByUserId String
+  invitedByUser   User   @relation(fields: [invitedByUserId], references: [id])
 }
 
 enum Gender {

@@ -52,16 +52,14 @@ function NavBar() {
             All Employees
           </Button>
         </Link>
-        <Link href="/create-employee" className="hidden lg:block">
+        <Link href="/invite-user" className="hidden lg:block">
           <Button
             variant="link"
             className={
-              pathname.includes("/create-employee")
-                ? "text-sky-600 underline"
-                : ""
+              pathname.includes("/invite-user") ? "text-sky-600 underline" : ""
             }
           >
-            Create Employee
+            Invite User
           </Button>
         </Link>
         {!user ? (
@@ -112,6 +110,7 @@ function NavBar() {
                         Create Employee
                       </Button>
                     </Link>
+
                     <Button variant={"ghost"} className="justify-start">
                       Your Profile
                     </Button>
