@@ -22,7 +22,7 @@ function SearchBar() {
   return (
     <Input
       placeholder="Search Employees by Name"
-      className="ml-auto w-96"
+      className="ml-auto w-full lg:w-96"
       onChange={(e) => onChange(e.target.value)}
       defaultValue={searchParams.get("query") || ""}
     />

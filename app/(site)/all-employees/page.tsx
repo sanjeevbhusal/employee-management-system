@@ -38,13 +38,12 @@ export default async function Home({
       <div>
         <SearchBar />
       </div>
-      <div className="flex gap-4">
+      <div className="mt-4 flex gap-4">
         <DepartmentFilter departments={departments} />
         <RoleFilter roles={roles} />
         <GenderFilter />
       </div>
 
-      <Pagination totalUsers={totalMatches} />
       <div className="mt-4 flex gap-4">
         {query && <Tag type="query" name={query} />}
         {department && (
@@ -59,8 +58,9 @@ export default async function Home({
         {gender && <Tag type="gender" name={gender} />}
         {role && <Tag type="role" name={role} />}
       </div>
+      <Pagination totalUsers={totalMatches} />
 
-      <div className="mt-12 flex flex-wrap gap-4">
+      <div className="mt-4 flex flex-wrap gap-4">
         {users.map((user) => (
           <UserCard key={user.id} user={user} />
         ))}

@@ -39,7 +39,7 @@ function Pagination({ totalUsers }: PaginationProps) {
   }
 
   return (
-    <div className="flex items-center justify-end gap-2">
+    <div className="mt-4 flex items-center justify-end gap-2">
       <Button
         variant={"ghost"}
         className="h-10 w-10 p-0"
