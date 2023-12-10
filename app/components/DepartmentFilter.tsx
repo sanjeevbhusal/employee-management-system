@@ -15,7 +15,6 @@ interface DepartmentFilterProps {
 }
 
 function DepartmentFilter({ departments }: DepartmentFilterProps) {
-  console.log(departments);
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();

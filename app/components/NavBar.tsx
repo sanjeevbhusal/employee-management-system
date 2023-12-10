@@ -30,12 +30,6 @@ function NavBar() {
   const [openHamburgerMenu, setOpenHamburgerMenu] = useState(false);
   const pathname = usePathname();
 
-  console.log(
-    pathname,
-    pathname.includes("/all-employees"),
-    pathname.includes("/create-employee"),
-  );
-
   return (
     <div className="flex items-center justify-between border-b px-4 py-4 lg:px-20">
       <h1 className="text-lg font-semibold">Employee Management System</h1>

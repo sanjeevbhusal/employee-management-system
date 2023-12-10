@@ -15,7 +15,10 @@ function UserCard({ user }: UserCardProps) {
           <CardHeader>
             <div className="flex gap-4">
               <Image
-                src={user.image as string}
+                src={
+                  user.image ||
+                  "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png"
+                }
                 alt={`User Card for ${user.name}`}
                 height={64}
                 width={64}

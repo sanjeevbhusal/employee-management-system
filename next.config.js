@@ -5,6 +5,7 @@ const nextConfig = {
       "lh3.googleusercontent.com",
       "cloudflare-ipfs.com",
       "avatars.githubusercontent.com",
+      "cdn.pixabay.com",
     ],
   },
 };

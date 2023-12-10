@@ -3,7 +3,6 @@ import { authOptions } from "../api/auth/[...nextauth]/route";
 
 async function getSession() {
   const session = await getServerSession(authOptions);
-  console.log("session", { session });
   return session?.user;
 }
 

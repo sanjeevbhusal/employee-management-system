@@ -23,11 +23,14 @@ function Pagination({ totalUsers }: PaginationProps) {
   const currentPage = parseInt(searchParams.get("page") || "1");
   const lastPage = Math.ceil(totalUsers / 10);
 
+  console.log(totalUsers, lastPage, currentPage);
+
   function setPage(page: number) {
     const params = new URLSearchParams(searchParams);
     params.set("page", page.toString());
     router.push(`${pathname}?${params.toString()}`);
   }
+
   function forwardPage() {
     if (currentPage === lastPage) return;
     setPage(currentPage + 1);
