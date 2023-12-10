@@ -28,50 +28,32 @@ model Organization {
   address    String
   Users      User[]
   Invitation Invitation[]
+  createdAt  DateTime     @default(now())
 }
 
-model Account {
-  id                String  @id @default(cuid())
-  userId            String
-  type              String
-  provider          String
-  providerAccountId String
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String? @db.Text
-  session_state     String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([provider, providerAccountId])
-}
+// name, dob, gender, email, image, about, city, country, state, strrretAddress, organizationId, password
 
 model User {
-  id             String        @id @default(cuid())
-  name           String?
-  about          String?
-  email          String?       @unique
-  password       String?
-  country        String?
-  streetAddress  String?
-  city           String?
-  state          String?
-  emailVerified  DateTime?
-  image          String?
-  address        String?
-  dob            DateTime?
-  gender         Gender?
+  id             String       @id @default(cuid())
+  name           String
+  about          String
+  email          String       @unique
+  password       String
+  country        String
+  streetAddress  String
+  city           String
+  state          String
+  image          String
+  dob            DateTime
+  gender         Gender
   departmentId   Int?
-  department     Department?   @relation(fields: [departmentId], references: [id])
+  department     Department?  @relation(fields: [departmentId], references: [id])
   roleId         Int?
-  role           Role?         @relation(fields: [roleId], references: [id])
-  organizationId Int?
-  organization   Organization? @relation(fields: [organizationId], references: [id])
-  accounts       Account[]
+  role           Role?        @relation(fields: [roleId], references: [id])
+  organizationId Int
+  organization   Organization @relation(fields: [organizationId], references: [id])
   Invitation     Invitation[]
+  createdAt      DateTime     @default(now())
 }
 
 model Invitation {

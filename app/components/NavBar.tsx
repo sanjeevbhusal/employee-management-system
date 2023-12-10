@@ -96,12 +96,12 @@ function NavBar() {
                         All Employees
                       </Button>
                     </Link>
-                    <Link href="/create-employee" className="">
+                    <Link href="/invite-user" className="">
                       <Button
                         variant="link"
                         onClick={() => setOpenHamburgerMenu(false)}
                       >
-                        Create Employee
+                        Invite User
                       </Button>
                     </Link>
 
