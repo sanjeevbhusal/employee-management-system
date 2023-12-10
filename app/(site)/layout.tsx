@@ -6,6 +6,7 @@ import NavBar from "../components/NavBar";
 import { Toaster } from "@/app/components/ui/toaster";
 import { getSession } from "../actions/getSession";
 import { redirect } from "next/navigation";
+import { headers } from "next/headers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,13 +17,11 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
   children,
+  params,
 }: {
   children: React.ReactNode;
+  params: any;
 }) {
-  const user = await getSession();
-  if (!user) {
-    redirect("/api/auth/signin");
-  }
   return (
     <html lang="en">
       <body className={inter.className}>
