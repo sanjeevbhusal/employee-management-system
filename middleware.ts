@@ -7,13 +7,14 @@ import type { NextRequest } from "next/server";
 
 export async function middleware(request: NextRequest) {
   const token = await getToken({ req: request });
-  console.log("Toke", token);
+
+  if (request.nextUrl.pathname.startsWith("/api/auth/signin") && token) {
+    return NextResponse.redirect(new URL("/", request.url));
+  }
 
   if (request.nextUrl.pathname.startsWith("/all-employees") && !token) {
     return NextResponse.redirect(new URL("/api/auth/signin", request.url));
   }
-
-  console.log(request.nextUrl.pathname, token);
 
   if (request.nextUrl.pathname.startsWith("/invite-user") && !token) {
     return NextResponse.redirect(new URL("/api/auth/signin", request.url));
@@ -26,5 +27,11 @@ export async function middleware(request: NextRequest) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ["/", "/all-employees", "/invite-user", "/create-employee"],
+  matcher: [
+    "/",
+    "/all-employees",
+    "/invite-user",
+    "/create-employee",
+    "/api/auth/signin",
+  ],
 };

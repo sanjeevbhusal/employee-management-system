@@ -28,6 +28,7 @@ import { useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useToast } from "@/app/components/ui/use-toast";
+import { faker } from "@faker-js/faker";
 
 const formSchema = z.object({
   employeeName: z.string().min(1, "This field is required"),
@@ -43,6 +44,10 @@ const formSchema = z.object({
   city: z.string().min(1, "This field is required"),
   state: z.string().min(1, "This field is required"),
   password: z.string().min(8, "Password must be at least 8 characters"),
+  dob: z.string().min(1, "This field is required"),
+  gender: z.enum(["male", "female"], {
+    required_error: "This field is required",
+  }),
 });
 
 export default function Example() {
@@ -58,6 +63,8 @@ export default function Example() {
       city: "",
       state: "",
       password: "",
+      dob: "",
+      gender: "male",
     },
   });
   const { toast } = useToast();
@@ -101,7 +108,9 @@ export default function Example() {
         streetAddress: values.streetAddress,
         city: values.city,
         state: values.state,
-        email: values.email,
+        gender: values.gender,
+        dob: values.dob,
+        image: faker.image.avatar(),
         password: values.password,
       });
       form.reset();
@@ -111,7 +120,7 @@ export default function Example() {
         className: "bg-blue-500 text-white",
       });
       setTimeout(() => {
-        router.push("/");
+        router.push("/api/auth/signin");
       }, 2500);
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -222,16 +231,64 @@ export default function Example() {
                 </h2>
                 <p className="mt-1 text-sm leading-6 text-gray-600">
                   This information cannot be seen by anyone except you and your
-                  company's HR.
+                  company&apos;s HR.
                 </p>
 
                 <div className="mt-10 space-y-8">
                   <FormField
                     control={form.control}
+                    name="dob"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-gray-800">
+                          Date of Birth
+                        </FormLabel>
+                        <FormControl>
+                          <Input {...field} className="w-96" />
+                        </FormControl>
+
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="gender"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="mt-10 text-gray-800">
+                          Gender
+                        </FormLabel>
+                        <FormControl>
+                          <Select
+                            value={field.value}
+                            name={field.name}
+                            onValueChange={(value) => {
+                              field.onChange(value);
+                            }}
+                          >
+                            <SelectTrigger className="w-[180px]">
+                              <SelectValue placeholder="Theme" />
+                            </SelectTrigger>
+                            <SelectContent {...field}>
+                              <SelectItem value="male">Male</SelectItem>
+                              <SelectItem value="female">Female</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
+
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
                     name="country"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-gray-800">Country</FormLabel>
+                        <FormLabel className="mt-10 text-gray-800">
+                          Country
+                        </FormLabel>
                         <FormControl>
                           {/* <Input {...field} className="w-96" /> */}
                           <Select
@@ -352,8 +409,8 @@ export default function Example() {
                           <Input {...field} className="w-96" />
                         </FormControl>
                         <FormDescription>
-                          This will be your account's password. You will need
-                          this to login to EmployeeHub.
+                          This will be your account&apos;s password. You will
+                          need this to login to EmployeeHub.
                         </FormDescription>
                         <FormMessage />
                       </FormItem>

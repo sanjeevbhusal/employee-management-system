@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  if (invitation.email !== dto.email || invitation.used) {
+  if (invitation.used) {
     return NextResponse.json(
       { error: "Invitation is invalid" },
       { status: 404 },
@@ -56,6 +56,8 @@ export async function POST(request: NextRequest) {
   const user = await prisma.user.create({
     data: {
       ...dto,
+      dob: new Date(dto.dob),
+      email: invitation.email,
       password: hashedPassword,
       organizationId: invitation.organizationId,
     },
