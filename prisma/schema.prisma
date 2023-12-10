@@ -82,6 +82,7 @@ model Invitation {
   organization    Organization? @relation(fields: [organizationId], references: [id])
   invitedByUserId String
   invitedByUser   User          @relation(fields: [invitedByUserId], references: [id])
+  used            Boolean       @default(false)
   createdAt       DateTime      @default(now())
 }
 

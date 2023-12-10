@@ -25,9 +25,16 @@ export async function POST(request: NextRequest) {
     where: {
       id: user.id,
     },
+    include: {
+      organization: {
+        select: {
+          name: true,
+        },
+      },
+    },
   });
 
-  await prisma.invitation.create({
+  const invitation = await prisma.invitation.create({
     data: {
       ...dto,
       invitedByUserId: user.id,
@@ -36,7 +43,7 @@ export async function POST(request: NextRequest) {
   });
 
   const token = jwt.sign(
-    { organizationId: _user?.organizationId, email: dto.email },
+    { invitationId: invitation.id },
     process.env.NEXTAUTH_SECRET as string,
   );
 
@@ -54,7 +61,7 @@ export async function POST(request: NextRequest) {
     from: "Sanjeev Bhusal <bhusalsanjeev23@gmail.com>",
     to: dto.email as string,
     subject: "Invitation to EmployeeHub",
-    text: `Please click this link to register your account\n http://localhost:3000/create-employee?token=${token}`,
+    text: `${_user?.organization?.name} invited you to join them on EmployeeHub. Please click this link to register your account\n http://localhost:3000/create-employee?invitationToken=${token}`,
   });
 
   return NextResponse.json({ success: true }, { status: 201 });

@@ -62,33 +62,39 @@ export default function Example() {
   });
   const { toast } = useToast();
   const router = useRouter();
+  const params = useSearchParams();
 
   const [isLoading, setIsLoading] = useState(false);
   const [organizationName, setOrganizationName] = useState("");
 
-  const params = useSearchParams();
-  const token = params.get("token");
+  const token = params.get("invitationToken");
 
   useEffect(() => {
     async function fetchOrganization() {
       try {
-        const response = await axios.get(`/api/invite/?token=${token}`);
+        const response = await axios.get(
+          `/api/invitation/?invitationToken=${token}`,
+        );
         const { organizationName, email } = response.data;
         setOrganizationName(organizationName);
         form.setValue("email", email);
       } catch (error) {
-        console.log(error);
+        router.push("/");
       } finally {
       }
     }
 
-    fetchOrganization();
+    if (!token) {
+      router.push("/");
+    } else {
+      fetchOrganization();
+    }
   }, [token]);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
     try {
-      await axios.post(`/api/user?token=${token}`, {
+      await axios.post(`/api/user?invitationToken=${token}`, {
         name: values.employeeName,
         about: values.about,
         country: values.country,
@@ -130,8 +136,8 @@ export default function Example() {
         <div className="m-auto w-[700px] py-8">
           <div className="px-2">
             <h1 className="pt-4 text-xl font-semibold leading-7 text-gray-900">
-              {organizationName} invited you to join their organization on
-              EmployeeHub
+              <span className="font-bold">{organizationName}</span> invited you
+              to join their organization on EmployeeHub
             </h1>
             <p className="mt-2 text-sm leading-6 text-gray-600">
               In order to create an account on EmployeeHub, please fill the form
@@ -325,8 +331,9 @@ export default function Example() {
                           <Input {...field} className="w-96" disabled={true} />
                         </FormControl>
                         <FormDescription>
-                          Store this email some place safe. This is the email
-                          assigned to you by {organizationName}
+                          This is the email assigned to you by{" "}
+                          {organizationName}. You will need this to login to
+                          EmployeeHub
                         </FormDescription>
                         <FormMessage />
                       </FormItem>
@@ -345,8 +352,8 @@ export default function Example() {
                           <Input {...field} className="w-96" />
                         </FormControl>
                         <FormDescription>
-                          Store this password some place safe. Without it, you
-                          cannot login to the application
+                          This will be your account's password. You will need
+                          this to login to EmployeeHub.
                         </FormDescription>
                         <FormMessage />
                       </FormItem>
